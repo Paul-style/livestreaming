@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Streaming with Camera</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Main Content */
+.stream-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.video-player {
+    width: 80%;
+    max-width: 800px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: black;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:disabled {
+    background-color: #bbb;
+    cursor: not-allowed;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Live Stream from Your Camera</h1>
+    </header>
+
+    <div class="stream-container">
+        <!-- Video Player for Displaying Live Stream -->
+        <video id="videoPlayer" class="video-player" autoplay muted></video>
+        
+        <!-- Controls to Start Streaming -->
+        <button id="startStreamingBtn">Start Streaming</button>
+        <button id="stopStreamingBtn" disabled>Stop Streaming</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Live Streaming Website</p>
+    </footer>
+
+    <script>
+        // script.js
+
+let mediaStream = null; // To store the user's media stream
+const videoPlayer = document.getElementById('videoPlayer');
+const startStreamingBtn = document.getElementById('startStreamingBtn');
+const stopStreamingBtn = document.getElementById('stopStreamingBtn');
+
+// Start streaming when the "Start Streaming" button is clicked
+startStreamingBtn.addEventListener('click', async () => {
+    try {
+        // Access user's camera and microphone
+        mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+
+        // Set the video element's source to the media stream
+        videoPlayer.srcObject = mediaStream;
+
+        // Disable the "Start Streaming" button and enable the "Stop Streaming" button
+        startStreamingBtn.disabled = true;
+        stopStreamingBtn.disabled = false;
+    } catch (err) {
+        console.error('Error accessing media devices:', err);
+        alert('Could not access your camera or microphone. Please try again.');
+    }
+});
+
+// Stop streaming when the "Stop Streaming" button is clicked
+stopStreamingBtn.addEventListener('click', () => {
+    // Stop all media tracks (video and audio)
+    if (mediaStream) {
+        const tracks = mediaStream.getTracks();
+        tracks.forEach(track => track.stop());
+
+        // Clear the video element's source
+        videoPlayer.srcObject = null;
+
+        // Disable the "Stop Streaming" button and enable the "Start Streaming" button
+        startStreamingBtn.disabled = false;
+        stopStreamingBtn.disabled = true;
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Streaming</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Main Content */
+.stream-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.video-player {
+    width: 80%;
+    max-width: 800px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: black;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Live Streaming Page</h1>
+    </header>
+
+    <div class="stream-container">
+        <!-- Video Player for Displaying Live Stream -->
+        <video id="videoPlayer" class="video-player" autoplay controls>
+            <!-- HLS stream link -->
+            <source id="videoSource" src="https://path-to-your-hls-stream.m3u8" type="application/x-mpegURL">
+            Your browser does not support HTML5 video.
+        </video>
+
+        <p>Enjoy the live stream!</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Live Streaming Website</p>
+    </footer>
+
+    <script>
+        // script.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoSource = document.getElementById('videoSource');
+
+    // Anda bisa menambahkan logika untuk mengganti sumber stream secara dinamis
+    // Misalnya, Anda bisa mengganti URL stream dengan sesuatu yang berbeda jika perlu
+    function changeStream(newStreamURL) {
+        videoSource.src = newStreamURL;
+        videoPlayer.load(); // Memuat stream baru
+        videoPlayer.play(); // Mulai bermain video
+    }
+
+    // Misalnya, Anda bisa mengubah stream ke URL baru setelah beberapa waktu
+    setTimeout(function() {
+        changeStream('https://path-to-new-hls-stream.m3u8');
+    }, 30000); // Ubah stream setelah 30 detik
+});
+    </script>
+</body>
+</html>
